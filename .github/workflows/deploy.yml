@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]  # 当推送到 main 分支时触发
+  workflow_dispatch:    # 允许手动触发
+
+# 设置 GITHUB_TOKEN 的权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # 构建任务
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 如果你想在 GitHub Actions 里运行 Docker 生成 HTML，解开下面注释
+      # 如果你是在本地/云服务器生成好 HTML 推送上来，则不需要下面这步
+      # - name: Build and Run Docker to generate HTML
+      #   run: |
+      #     docker build -t webbuilder .
+      #     docker run -v $(pwd)/docs:/app/docs -e ERNIE_ACCESS_TOKEN="${{ secrets.ERNIE_ACCESS_TOKEN }}" webbuilder
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs' # 指定要部署的文件夹 (生成的 HTML 所在目录)
+
+  # 部署任务
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
