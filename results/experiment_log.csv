@@ -1,2 +1,5 @@
 timestamp,sample_name,model_version,processing_time,avg_confidence,regions_detected,images_extracted,tables_extracted
 2025-12-11 17:27:25,sample,baseline,375.59,0.85,88,1,6
+2025-12-11 18:25:04,sample,baseline,375.05,0.85,88,1,6
+2025-12-11 18:31:56,sample,finetuned_v1,351.94,0.85,88,1,6
+2025-12-11 18:37:32,sample,finetuned_v2,287.55,0.85,88,1,6
