@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+myenv/
+venv/
+.env
+.venv/
+env/
+
+# System
+.DS_Store
+.vscode/
+
+# Sensitive Data (Optional, if you want to exclude data)
+# data/
+
+# Logs
+*.log
